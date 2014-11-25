@@ -1,11 +1,15 @@
 {
-  "name": "fzaninotto/Streamer",
+  "name": "deminy/Streamer",
   "description": "Object-oriented API to PHP streams",
-  "homepage": "https://github.com/fzaninotto/Streamer",
-  "version": "0.0.1",
+  "homepage": "https://github.com/deminy/Streamer",
   "license": "MIT",
   "authors": [
-      { "name": "Francois Zaninotto" }
+    { "name": "Francois Zaninotto" },
+    {
+      "name": "Demin Yin",
+      "email": "deminy@deminy.net",
+      "homepage": "http://deminy.net"
+    }
   ],
   "require": {
       "php": ">=5.3.0"
