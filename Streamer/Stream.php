@@ -12,6 +12,9 @@ class Stream
     protected $stream;
     protected $isOpen;
 
+    /**
+     * @var array
+     */
     protected static $readableModes = array(
         'r',
         'r+',
@@ -30,8 +33,12 @@ class Stream
         'w+t',
         'a+t',
         'x+t',
-        'c+t'
+        'c+t',
     );
+
+    /**
+     * @var array
+     */
     protected static $writableModes = array(
         'r+',
         'w',
@@ -59,9 +66,13 @@ class Stream
         'xt',
         'x+t',
         'ct',
-        'c+t'
+        'c+t',
     );
 
+    /**
+     * @param resource $stream
+     * @throws InvalidArgumentException
+     */
     public function __construct($stream)
     {
         if (!is_resource($stream)) {
@@ -170,8 +181,8 @@ class Stream
      * Binary-safe.
      *
      * @param int $length Maximum number of bytes to read. Defaults to self::$bufferSize.
-     *
      * @return string The data read from the stream
+     * @throws RuntimeException
      */
     public function read($length = null)
     {
@@ -196,8 +207,8 @@ class Stream
      *
      * @param int $length Maximum number of bytes to read. Defaults to self::$bufferSize.
      * @param string $ending Line ending to stop at. Defaults to "\n".
-     *
      * @return string The data read from the stream
+     * @throws RuntimeException
      */
     public function getLine($length = null, $ending = "\n")
     {
@@ -218,6 +229,7 @@ class Stream
      * Binary-safe.
      *
      * @return string The data read from the stream
+     * @throws LogicException
      */
     public function getContent()
     {
@@ -253,9 +265,10 @@ class Stream
      * Binary-safe.
      *
      * @param string $string The string that is to be written.
-     * @param int $length If the length argument is given, writing will stop after length bytes have been written or the end of string is reached, whichever comes first.
-     *
+     * @param int $length If the length argument is given, writing will stop after length bytes have been written or
+     *                    the end of string is reached, whichever comes first.
      * @return int Number of bytes written
+     * @throws RuntimeException
      */
     public function write($string, $length = null)
     {
@@ -300,6 +313,7 @@ class Stream
      * Get the position of the file pointer
      *
      * @return int
+     * @throws RuntimeException
      */
     public function getOffset()
     {
@@ -323,6 +337,8 @@ class Stream
      *              - SEEK_SET - Set position equal to $offset bytes.
      *              - SEEK_CUR - Set position to current location plus $offset.
      *              - SEEK_END - Set position to end-of-file plus $offset.
+     * @return void
+     * @throws RuntimeException
      */
     public function seek($offset, $whence = SEEK_SET)
     {
@@ -334,6 +350,9 @@ class Stream
 
     /**
      * Move the file pointer to the beginning of the stream
+     *
+     * @return void
+     * @throws RuntimeException
      */
     public function rewind()
     {
@@ -343,6 +362,10 @@ class Stream
         }
     }
 
+    /**
+     * @return void
+     * @throws LogicException
+     */
     protected function assertSeekable()
     {
         if (!$this->isOpen) {
