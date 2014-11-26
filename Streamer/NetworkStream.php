@@ -24,9 +24,9 @@ class NetworkStream extends Stream
         // stream_socket_client needs to be called in the correct way based on what we have been passed.
         if (is_null($timeout) && is_null($flags) && is_null($context)) {
             $fp = stream_socket_client($remoteSocket, $errno, $errstr);
-        } else if (is_null($flags) && is_null($context)) {
+        } elseif (is_null($flags) && is_null($context)) {
             $fp = stream_socket_client($remoteSocket, $errno, $errstr, $timeout);
-        } else if (is_null($context)) {
+        } elseif (is_null($context)) {
             $fp = stream_socket_client($remoteSocket, $errno, $errstr, $timeout, $flags);
         } else {
             $fp = stream_socket_client($remoteSocket, $errno, $errstr, $timeout, $flags, $context);

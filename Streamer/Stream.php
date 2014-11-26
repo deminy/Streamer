@@ -13,10 +13,53 @@ class Stream
     protected $isOpen;
 
     protected static $readableModes = array(
-        'r', 'r+', 'w+', 'a+', 'x+', 'c+', 'rb', 'r+b', 'w+b', 'a+b', 'x+b', 'c+b', 'rt', 'r+t', 'w+t', 'a+t', 'x+t', 'c+t'
+        'r',
+        'r+',
+        'w+',
+        'a+',
+        'x+',
+        'c+',
+        'rb',
+        'r+b',
+        'w+b',
+        'a+b',
+        'x+b',
+        'c+b',
+        'rt',
+        'r+t',
+        'w+t',
+        'a+t',
+        'x+t',
+        'c+t'
     );
     protected static $writableModes = array(
-        'r+', 'w', 'w+', 'a', 'a+', 'x', 'x+', 'c', 'c+', 'r+b', 'wb', 'w+b', 'ab', 'a+b', 'xb', 'x+b', 'cb', 'c+b', 'r+t', 'wt', 'w+t', 'at', 'a+t', 'xt', 'x+t', 'ct', 'c+t'
+        'r+',
+        'w',
+        'w+',
+        'a',
+        'a+',
+        'x',
+        'x+',
+        'c',
+        'c+',
+        'r+b',
+        'wb',
+        'w+b',
+        'ab',
+        'a+b',
+        'xb',
+        'x+b',
+        'cb',
+        'c+b',
+        'r+t',
+        'wt',
+        'w+t',
+        'at',
+        'a+t',
+        'xt',
+        'x+t',
+        'ct',
+        'c+t'
     );
 
     public function __construct($stream)
@@ -113,7 +156,7 @@ class Stream
     {
         $this->bufferSize = $bufferSize;
     }
-    
+
     /**
      * @return int BufferSize in Bytes
      */
@@ -121,7 +164,7 @@ class Stream
     {
         return $this->bufferSize;
     }
-    
+
     /**
      * Read data from the stream.
      * Binary-safe.
@@ -140,14 +183,14 @@ class Stream
         if (false === $ret) {
             throw new RuntimeException('Cannot read stream');
         }
-        
+
         return $ret;
     }
 
     /**
      * Read one line from the stream.
      *
-     * Binary-safe. Reading ends when length bytes have been read, when the 
+     * Binary-safe. Reading ends when length bytes have been read, when the
      * string specified by ending is found (which is not included in the return
      *  value), or on EOF (whichever comes first).
      *
@@ -166,7 +209,7 @@ class Stream
         if (false === $ret) {
             throw new RuntimeException('Cannot read stream');
         }
-        
+
         return $ret;
     }
 
@@ -179,6 +222,7 @@ class Stream
     public function getContent()
     {
         $this->assertReadable();
+
         return stream_get_contents($this->stream);
     }
 
@@ -188,7 +232,9 @@ class Stream
             throw new LogicException('Cannot read from a closed stream');
         }
         if (!$this->isReadable()) {
-            throw new LogicException(sprintf('Cannot read on a non readable stream (current mode is %s)', $this->getMetadataForKey('mode')));
+            throw new LogicException(
+                sprintf('Cannot read on a non readable stream (current mode is %s)', $this->getMetadataForKey('mode'))
+            );
         }
     }
 
@@ -232,7 +278,9 @@ class Stream
             throw new LogicException('Cannot write on a closed stream');
         }
         if (!$this->isWritable()) {
-            throw new LogicException(sprintf('Cannot write on a non-writable stream (current mode is %s)', $this->getMetadataForKey('mode')));
+            throw new LogicException(
+                sprintf('Cannot write on a non-writable stream (current mode is %s)', $this->getMetadataForKey('mode'))
+            );
         }
     }
 
@@ -260,10 +308,10 @@ class Stream
         if (false === $ret) {
             throw new RuntimeException('Cannot get offset of stream');
         }
-        
+
         return $ret;
     }
-    
+
     /**
      * Move the file pointer to a new position
      *
@@ -305,7 +353,7 @@ class Stream
         }
     }
 
-    
+
     public function close()
     {
         if (!$this->isOpen) {
