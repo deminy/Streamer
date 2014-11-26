@@ -16,12 +16,12 @@ PHP has a very elaborate stream API ; unfortunately, it uses functions for most 
 
 ## Installation
 
-Streamer is published on [packagist.org](http://packagist.org/packages/fzaninotto/Streamer), so you can add it to your `composer.json` file for an easy installation:
+Streamer is published on [packagist.org](http://packagist.org/packages/deminy/streamer), so you can add it to your `composer.json` file for an easy installation:
 
 ```json
 {
     "require": {
-        "fzaninotto/Streamer": "0.0.1"
+        "fzaninotto/streamer": "@dev"
     }
 }
 ```
@@ -48,7 +48,7 @@ $stream1->pipe($stream2);
 
 ### Credits
 
-Streamer is heavily inspired by other Stream class implementations:
+Streamer was originally developed by [fzaninotto](https://github.com/fzaninotto/Streamer), which was heavily inspired by other Stream class implementations:
 
 * [Guzzle](https://github.com/guzzle/guzzle/blob/master/src/Guzzle/Common/Stream.php)
 * [Joomla's Filesystem Stream](http://api.joomla.org/__filesource/fsource_Joomla-Platform_FileSystem--_librariesjoomlafilesystemstream.php.html)
