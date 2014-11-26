@@ -21,7 +21,7 @@ Streamer is published on [packagist.org](http://packagist.org/packages/deminy/st
 ```json
 {
     "require": {
-        "fzaninotto/streamer": "@dev"
+        "deminy/streamer": "@dev"
     }
 }
 ```
