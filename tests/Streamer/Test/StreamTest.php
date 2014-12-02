@@ -91,8 +91,18 @@ class StreamTest extends \PHPUnit_Framework_TestCase
 
     protected static function getModesAndVariants($modes)
     {
-        $binaryModes = array_map(function($el) { return $el . 'b'; }, $modes);
-        $windowsModes = array_map(function($el) { return $el . 't'; }, $modes);
+        $binaryModes = array_map(
+            function($el) {
+                return $el . 'b';
+            },
+            $modes
+        );
+        $windowsModes = array_map(
+            function($el) {
+                return $el . 't';
+            },
+            $modes
+        );
         $allModes = array();
         foreach ($modes as $mode) {
             $allModes[] = array($mode);
@@ -271,11 +281,22 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     public function testReadContinuesFromTheCurrentPosition()
     {
         $handle = fopen('php://temp', 'r+');
-        fwrite($handle, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.');
+        fwrite(
+            $handle,
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et ' .
+            'dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ' .
+            'ex ea commodo consequat.'
+        );
         rewind($handle);
         $stream = new Stream($handle);
-        $this->assertEquals('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore', $stream->read(100));
-        $this->assertEquals(' et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut ', $stream->read(100));
+        $this->assertEquals(
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore',
+            $stream->read(100)
+        );
+        $this->assertEquals(
+            ' et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut ',
+            $stream->read(100)
+        );
         $this->assertEquals('aliquip ex ea commodo consequat.', $stream->read(100));
     }
     
@@ -476,5 +497,4 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $this->markTestIncomplete();
         // dunno how to test that
     }
-
 }
