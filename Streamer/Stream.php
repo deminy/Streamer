@@ -8,8 +8,19 @@ use Streamer\Exception\RuntimeException;
 
 class Stream
 {
+    /**
+     * @var int
+     */
     protected $bufferSize = 4096;
+
+    /**
+     * @var resource
+     */
     protected $stream;
+
+    /**
+     * @var bool
+     */
     protected $isOpen;
 
     /**
@@ -82,16 +93,27 @@ class Stream
         $this->isOpen = true;
     }
 
+    /**
+     * @return resource
+     */
     public function getResource()
     {
         return $this->stream;
     }
 
+    /**
+     * @return array
+     * @see http://php.net/manual/en/function.stream-get-meta-data.php
+     */
     public function getMetadata()
     {
         return stream_get_meta_data($this->stream);
     }
 
+    /**
+     * @param string $key
+     * @return mixed
+     */
     public function getMetadataForKey($key)
     {
         $metadata = $this->getMetadata();
@@ -100,21 +122,33 @@ class Stream
         }
     }
 
+    /**
+     * @return string
+     */
     public function getUri()
     {
         return $this->getMetadataForKey('uri');
     }
 
+    /**
+     * @return string
+     */
     public function getStreamType()
     {
         return $this->getMetadataForKey('stream_type');
     }
 
+    /**
+     * @return string
+     */
     public function getWrapperType()
     {
         return $this->getMetadataForKey('wrapper_type');
     }
 
+    /**
+     * @return mixed
+     */
     public function getWrapperData()
     {
         return $this->getMetadataForKey('wrapper_data');
