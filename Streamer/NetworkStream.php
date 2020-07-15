@@ -18,15 +18,16 @@ class NetworkStream extends Stream
         &$errno = null,
         &$errstr = null,
         $timeout = null,
-        $flags = null,
+        $flags = STREAM_CLIENT_CONNECT,
         $context = null
     ) {
+        $timeout = $timeout ?? (ini_get('default_socket_timeout') ?? null);
+        $type = gettype($context);
+
         // stream_socket_client needs to be called in the correct way based on what we have been passed.
-        if (is_null($timeout) && is_null($flags) && is_null($context)) {
+        if (is_null($timeout) && ($type != 'resource')) {
             $fp = stream_socket_client($remoteSocket, $errno, $errstr);
-        } elseif (is_null($flags) && is_null($context)) {
-            $fp = stream_socket_client($remoteSocket, $errno, $errstr, $timeout);
-        } elseif (is_null($context)) {
+        } elseif ($type != 'resource') {
             $fp = stream_socket_client($remoteSocket, $errno, $errstr, $timeout, $flags);
         } else {
             $fp = stream_socket_client($remoteSocket, $errno, $errstr, $timeout, $flags, $context);

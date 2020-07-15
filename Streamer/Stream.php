@@ -241,21 +241,17 @@ class Stream
      *
      * @param int $length Maximum number of bytes to read. Defaults to self::$bufferSize.
      * @param string $ending Line ending to stop at. Defaults to "\n".
-     * @return string The data read from the stream
+     * @return false|string The data read from the stream
      * @throws RuntimeException
      */
-    public function getLine($length = null, $ending = "\n")
+    public function getLine($length = null, string $ending = "\n")
     {
         $this->assertReadable();
         if (null == $length) {
             $length = $this->bufferSize;
         }
-        $ret = stream_get_line($this->stream, $length, $ending);
-        if (false === $ret) {
-            throw new RuntimeException('Cannot read stream');
-        }
 
-        return $ret;
+        return stream_get_line($this->stream, $length, $ending);
     }
 
     /**

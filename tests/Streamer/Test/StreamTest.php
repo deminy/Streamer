@@ -2,16 +2,17 @@
 
 namespace Streamer\Test;
 
+use PHPUnit\Framework\TestCase;
+use Streamer\Exception\InvalidArgumentException;
+use Streamer\Exception\LogicException;
 use Streamer\Stream;
 
-class StreamTest extends \PHPUnit_Framework_TestCase
+class StreamTest extends TestCase
 {
-    /**
-     * @expectedException Streamer\Exception\InvalidArgumentException
-     */
     public function testConstructorRequiresAValidResource()
     {
-        $stream = new Stream('hello');
+        $this->expectException(InvalidArgumentException::class);
+        new Stream('hello');
     }
 
     public function testGetResourceReturnsThePHPResource()
@@ -231,21 +232,17 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(100, $stream->getBufferSize());
     }
     
-    /**
-     * @expectedException Streamer\Exception\LogicException
-     */
     public function testReadThrowsExceptionOnClosedStreams()
     {
+        $this->expectException(LogicException::class);
         $stream = new Stream(fopen('php://temp', 'r+'));
         $stream->close();
         $stream->read();
     }
 
-    /**
-     * @expectedException Streamer\Exception\LogicException
-     */
     public function testReadThrowsExceptionOnNonReadbleStreams()
     {
+        $this->expectException(LogicException::class);
         $stream = new Stream(fopen('file://' . tempnam(sys_get_temp_dir(), 'foo'), 'w'));
         $stream->read();
     }
@@ -310,11 +307,9 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('', $stream->read());
     }
     
-    /**
-     * @expectedException Streamer\Exception\LogicException
-     */
     public function testGetLineThrowsExceptionOnNonReadbleStreams()
     {
+        $this->expectException(LogicException::class);
         $stream = new Stream(fopen('file://' . tempnam(sys_get_temp_dir(), 'foo'), 'w'));
         $stream->getLine();
     }
@@ -372,7 +367,7 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         rewind($handle);
         $stream = new Stream($handle);
         $stream->read(3);
-        $this->assertEquals('', $stream->getLine());
+        self::assertFalse($stream->getLine());
     }
 
     public function testIsEOFReturnsFalseIfStreamIsNotAtEnd()
@@ -414,21 +409,17 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($stream->isOpen());
     }
 
-    /**
-     * @expectedException Streamer\Exception\LogicException
-     */
     public function testWriteThrowsExceptionOnClosedStreams()
     {
+        $this->expectException(LogicException::class);
         $stream = new Stream(fopen('php://temp', 'r+'));
         $stream->close();
         $stream->write('foo');
     }
 
-    /**
-     * @expectedException Streamer\Exception\LogicException
-     */
     public function testWriteThrowsExceptionOnNonWritableStreams()
     {
+        $this->expectException(LogicException::class);
         $stream = new Stream(fopen('file://' . tempnam(sys_get_temp_dir(), 'foo'), 'r'));
         $stream->write('foo');
     }
@@ -482,11 +473,9 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(6, $stream1->pipe($stream2));
     }
     
-    /**
-     * @expectedException Streamer\Exception\LogicException
-     */
     public function testCloseThrowsExceptionOnClosedStreams()
     {
+        $this->expectException(LogicException::class);
         $stream = new Stream(fopen('php://temp', 'r+'));
         $stream->close();
         $stream->close();
