@@ -18,6 +18,12 @@ PHP has a very elaborate stream API ; unfortunately, it uses functions for most 
 
 Streamer is published on [packagist.org](http://packagist.org/packages/deminy/streamer), so you can add it to your `composer.json` file for an easy installation:
 
+```sh
+composer require deminy/streamer
+```
+
+or
+
 ```json
 {
     "require": {
@@ -30,7 +36,9 @@ Streamer is published on [packagist.org](http://packagist.org/packages/deminy/st
 
 ```php
 <?php
-use Streamer\Stream;
+use Streamer\Stream,
+	Streamer\FileStream,
+	Streamer\NetworkStream;
 
 // basic usage
 $stream = new Stream(fopen('smiley.png', 'r'));
@@ -44,12 +52,19 @@ $stream1 = new Stream(fopen('smiley.png', 'r'));
 $stream2 = new Stream(fopen('tmp.png', 'w'));
 // copy the contents from the first stream to the second one
 $stream1->pipe($stream2);
+
+// factory
+$fileStream = FileStream::create('smiley.png', 'r');
+print_r($fileStream);
+
+$networkStream = NetworkStream::create('tcp://www.google.com:80');
+print_r($networkStream);
 ```
 
 ### Credits
 
 Streamer was originally developed by [fzaninotto](https://github.com/fzaninotto/Streamer), which was heavily inspired by other Stream class implementations:
 
-* [Guzzle](https://github.com/guzzle/guzzle/blob/master/src/Guzzle/Common/Stream.php)
+* [Guzzle](https://github.com/guzzle/streams/blob/ce5a645ee89ea0914db1f601b917b8bf211e3630/src/Stream.php)
 * [Joomla's Filesystem Stream](http://api.joomla.org/__filesource/fsource_Joomla-Platform_FileSystem--_librariesjoomlafilesystemstream.php.html)
 * [Node.Js Stream API](http://nodejs.org/api/stream.html)
