@@ -7,14 +7,19 @@
     { "name": "Francois Zaninotto" },
     {
       "name": "Demin Yin",
-      "email": "deminy@deminy.net",
-      "homepage": "http://deminy.net"
+      "email": "deminy@deminy.in",
+      "homepage": "https://deminy.in"
     }
   ],
   "require": {
-      "php": ">=5.3.0"
+      "php": ">=7.1"
   },
-  "autoload": {
-      "psr-0": { "Streamer": "." }
+  "require-dev": {
+    "phpunit/phpunit": "~8.0 || ~9.0"
+  },
+  "autoload" : {
+    "psr-4" : {
+      "Streamer\\" : "src/"
+    }
   }
 }
